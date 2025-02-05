@@ -12,4 +12,11 @@ defmodule Merchant.BucketTest do
     Merchant.Bucket.put(bucket, "elixir", 1)
     assert Merchant.Bucket.get(bucket, "elixir") == 1
   end
+
+  test "delete keys from the bucket", %{bucket: bucket} do
+    Merchant.Bucket.put(bucket, "elixir", 1)
+    assert Merchant.Bucket.delete(bucket, "elixir") == 1
+
+    assert Merchant.Bucket.delete(bucket, "elixir") == nil
+  end
 end
