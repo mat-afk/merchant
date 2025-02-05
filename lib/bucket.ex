@@ -23,7 +23,7 @@ defmodule Merchant.Bucket do
   end
 
   @doc """
-  Deletes a given key from the bucket
+  Deletes a given `key` from the bucket
 
   Returns the current value associated with the the key
   """
