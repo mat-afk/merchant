@@ -23,4 +23,12 @@ defmodule Merchant.RegistryTest do
     Agent.stop(bucket)
     assert Merchant.Registry.lookup(registry, "shopping") == :error
   end
+
+  test "removes bucket on crash", %{registry: registry} do
+    Merchant.Registry.create(registry, "shopping")
+    {:ok, bucket} = Merchant.Registry.lookup(registry, "shopping")
+
+    Agent.stop(bucket, :shutdown)
+    assert Merchant.Registry.lookup(registry, "shopping") == :error
+  end
 end

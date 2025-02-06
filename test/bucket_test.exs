@@ -19,4 +19,8 @@ defmodule Merchant.BucketTest do
 
     assert Merchant.Bucket.delete(bucket, "elixir") == nil
   end
+
+  test "buckets are temporary workers" do
+    assert Supervisor.child_spec(Merchant.Bucket, []).restart == :temporary
+  end
 end
