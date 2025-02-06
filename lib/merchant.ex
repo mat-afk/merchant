@@ -1,22 +1,11 @@
 defmodule Merchant do
+  use Application
+
   @moduledoc """
   Documentation for `Merchant`.
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Merchant.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
-
-  def world do
-    :hello
+  def start(_type, _args) do
+    Merchant.Supervisor.start_link(name: Merchant.Supervisor)
   end
 end
