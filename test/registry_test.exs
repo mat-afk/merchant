@@ -1,9 +1,9 @@
 defmodule Merchant.RegistryTest do
   use ExUnit.Case, async: true
 
-  setup do
-    registry = start_supervised!(Merchant.Registry)
-    %{registry: registry}
+  setup context do
+    _ = start_supervised!({Merchant.Registry, name: context.test})
+    %{registry: context.test}
   end
 
   test "spawns a named bucket", %{registry: registry} do
@@ -21,6 +21,8 @@ defmodule Merchant.RegistryTest do
     {:ok, bucket} = Merchant.Registry.lookup(registry, "shopping")
 
     Agent.stop(bucket)
+
+    _ = Merchant.Registry.create(registry, "bogus")
     assert Merchant.Registry.lookup(registry, "shopping") == :error
   end
 
@@ -29,6 +31,8 @@ defmodule Merchant.RegistryTest do
     {:ok, bucket} = Merchant.Registry.lookup(registry, "shopping")
 
     Agent.stop(bucket, :shutdown)
+
+    _ = Merchant.Registry.create(registry, "bogus")
     assert Merchant.Registry.lookup(registry, "shopping") == :error
   end
 end
