@@ -9,7 +9,8 @@ defmodule Merchant.Supervisor do
   def init(:ok) do
     children = [
       {DynamicSupervisor, name: Merchant.BucketSupervisor, strategy: :one_for_one},
-      {Merchant.Registry, name: Merchant.Registry}
+      {Merchant.Registry, name: Merchant.Registry},
+      {Task.Supervisor, name: Merchant.RouterTasks}
     ]
 
     Supervisor.init(children, strategy: :one_for_all)

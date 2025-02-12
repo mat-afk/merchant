@@ -45,8 +45,10 @@ defmodule MerchantServer.Command do
   def run(command)
 
   def run({:create, bucket}) do
-    Merchant.Registry.create(Merchant.Registry, bucket)
-    {:ok, "OK\r\n"}
+    case Merchant.Router.route(bucket, Merchant.Registry, :create, [Merchant.Registry, bucket]) do
+      pid when is_pid(pid) -> {:ok, "OK\r\n"}
+      _ -> {:error, "FAILED TO CREATE BUCKET\r\n"}
+    end
   end
 
   def run({:put, bucket, key, value}) do
@@ -69,7 +71,7 @@ defmodule MerchantServer.Command do
   end
 
   defp lookup(bucket, callback) do
-    case Merchant.Registry.lookup(Merchant.Registry, bucket) do
+    case Merchant.Router.route(bucket, Merchant.Registry, :lookup, [Merchant.Registry, bucket]) do
       {:ok, pid} -> callback.(pid)
       :error -> {:error, :not_found}
     end
