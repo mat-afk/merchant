@@ -10,7 +10,7 @@ defmodule MerchantServer.MixProject do
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
       elixir: "~> 1.18",
-      start_permanent: Mix.env() == :dev,
+      start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
   end

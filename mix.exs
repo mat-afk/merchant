@@ -5,8 +5,14 @@ defmodule MerchantUmbrella.MixProject do
     [
       apps_path: "apps",
       version: "0.1.0",
-      start_permanent: Mix.env() == :dev,
-      deps: deps()
+      start_permanent: Mix.env() == :prod,
+      deps: deps(),
+      releases: [
+        v1: [
+          version: "0.0.1",
+          applications: [merchant: :permanent, merchant_server: :permanent]
+        ]
+      ]
     ]
   end
 

@@ -1,5 +1,17 @@
 defmodule Merchant.RouterTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
+
+  setup_all do
+    current = Application.get_env(:merchant, :routing_table)
+    computer_name = System.get_env("COMPUTER_NAME", "PC-Cazu")
+
+    Application.put_env(:merchant, :routing_table, [
+      {?a..?m, :"foo@#{computer_name}"},
+      {?n..?z, :"bar@#{computer_name}"}
+    ])
+
+    on_exit(fn -> Application.put_env(:merchant, :routing_table, current) end)
+  end
 
   @tag :distributed
   test "route requests across nodes" do

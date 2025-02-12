@@ -10,7 +10,7 @@ defmodule Merchant.MixProject do
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
       elixir: "~> 1.18",
-      start_permanent: Mix.env() == :dev,
+      start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
   end
@@ -19,6 +19,7 @@ defmodule Merchant.MixProject do
   def application do
     [
       extra_applications: [:logger],
+      env: [routing_table: []],
       mod: {Merchant, []}
     ]
   end

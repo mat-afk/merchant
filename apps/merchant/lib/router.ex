@@ -24,7 +24,6 @@ defmodule Merchant.Router do
   Returns the routing table.
   """
   def table do
-    computer_name = System.get_env("COMPUTER_NAME", "PC-Cazu")
-    [{?a..?m, :"foo@#{computer_name}"}, {?n..?z, :"bar@#{computer_name}"}]
+    Application.fetch_env!(:merchant, :routing_table)
   end
 end
